@@ -101,9 +101,10 @@ const StaggeredMotion = React.createClass({
   },
 
   startAnimationIfNecessary(): void {
+    const raf = this.props.raf || defaultRaf;
     // TODO: when config is {a: 10} and dest is {a: 10} do we raf once and
     // call cb? No, otherwise accidental parent rerender causes cb trigger
-    this.animationID = defaultRaf((timestamp) => {
+    this.animationID = raf((timestamp) => {
       const destStyles: Array<Style> = this.props.styles(this.state.lastIdealStyles);
 
       // check if we need to animate in the first place
@@ -239,7 +240,8 @@ const StaggeredMotion = React.createClass({
 
   componentWillUnmount() {
     if (this.animationID != null) {
-      defaultRaf.cancel(this.animationID);
+      const caf = this.props.caf || defaultRaf.cancel;
+      caf(this.animationID);
       this.animationID = null;
     }
   },
