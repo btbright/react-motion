@@ -39,10 +39,10 @@
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
+    "postinstall" : "npm run prerelease",
     "start": "node server.js",
     "build-demos": "webpack",
     "lint": "eslint --ext .js,.jsx .",
-    "prepublish" : "npm run prerelease",
     "prerelease": "rm -rf lib && babel src --out-dir lib && webpack --config webpack.prod.config.js",
     "test": "karma start ./karma.conf.js --single-run",
     "test:travis": "karma start ./karma.conf.js --single-run",
